@@ -102,7 +102,7 @@ public class EntityManager {
 	}
 
 	private Session getSession() {
-		return this.factory.getCurrentSession();
+		return this.factory.openSession();
 	}
 
 	private Serializable getEntityIdentifier(String entityName, Object entity, EntityMode entityMode) {
@@ -198,7 +198,7 @@ public class EntityManager {
 				query.setFirstResult(pageIndex * pageSize);
 				query.setMaxResults(pageSize);
 			}
-			List list = query.list();
+			List<T> list = query.list();
 			session.clear();
 			tx.commit();
 			return list;

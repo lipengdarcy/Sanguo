@@ -1,7 +1,5 @@
 package org.darcy.sanguo.union.combat;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,10 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
-import org.darcy.sanguo.Configuration;
 import org.darcy.sanguo.Platform;
 import org.darcy.sanguo.asynccall.AsyncCall;
 import org.darcy.sanguo.drop.Reward;
@@ -32,6 +27,7 @@ import org.darcy.sanguo.service.MailService;
 import org.darcy.sanguo.service.Service;
 import org.darcy.sanguo.time.Crontab;
 import org.darcy.sanguo.union.League;
+import org.darcy.sanguo.utils.ExcelUtils;
 
 import com.google.protobuf.GeneratedMessage;
 
@@ -51,21 +47,21 @@ public class LeagueCombatService implements Service, PacketHandler, EventHandler
 	public static final int NULL_SCORE = 1000;
 	public static final int ALMOST_WIN_SCORE = 5000;
 	public static final long MAX_LAST_MINISECONDS = 600000L;
-	public static Map<Integer, Integer> countryBuffs = new HashMap();
+	public static Map<Integer, Integer> countryBuffs = new HashMap<Integer, Integer>();
 
-	public static Map<Integer, Integer> cityRates = new HashMap();
+	public static Map<Integer, Integer> cityRates = new HashMap<Integer, Integer>();
 
-	public static Map<Integer, Integer> cityAtkAdds = new HashMap();
+	public static Map<Integer, Integer> cityAtkAdds = new HashMap<Integer, Integer>();
 
 	public static int PVP_DROP = 30016;
-	public static List<WeekReward> weekRewards = new ArrayList();
+	public static List<WeekReward> weekRewards = new ArrayList<WeekReward>();
 
-	public static List<Reward> winRewards = new ArrayList();
-	public static List<Reward> loseRewards = new ArrayList();
+	public static List<Reward> winRewards = new ArrayList<Reward>();
+	public static List<Reward> loseRewards = new ArrayList<Reward>();
 
-	public static Set<Integer> syncList = new HashSet();
+	public static Set<Integer> syncList = new HashSet<Integer>();
 
-	private static Set<Integer> tmpBroadCast = new HashSet();
+	private static Set<Integer> tmpBroadCast = new HashSet<Integer>();
 
 	public int[] getCodes() {
 		return new int[] { 2273, 2283, 2285, 2287, 2289, 2291, 2294, 2279, 2281, 2277, 2301 };
@@ -162,7 +158,7 @@ public class LeagueCombatService implements Service, PacketHandler, EventHandler
 
 	public void send2League(int lid, int ptCode, GeneratedMessage msg) {
 		League league = Platform.getLeagueManager().getLeagueById(lid);
-		for (Iterator localIterator = league.getInfo().getMembers().keySet().iterator(); localIterator.hasNext();) {
+		for (Iterator<?> localIterator = league.getInfo().getMembers().keySet().iterator(); localIterator.hasNext();) {
 			int pid = ((Integer) localIterator.next()).intValue();
 			if (syncList.contains(Integer.valueOf(pid))) {
 				Player p = Platform.getPlayerManager().getPlayerById(pid);
@@ -199,12 +195,12 @@ public class LeagueCombatService implements Service, PacketHandler, EventHandler
 			if (deffenLid != -1) {
 				InnerRank ir;
 				PbLeague.LCInnerNode.Builder ib;
-				List rewards;
+				List<Reward> rewards;
 				Reward r;
-				Iterator localIterator2;
+				Iterator<Reward> localIterator2;
 				League deffen = Platform.getLeagueManager().getLeagueById(deffenLid);
-				List deffenList = new ArrayList();
-				List offenList = new ArrayList();
+				List<InnerRank> deffenList = new ArrayList<InnerRank>();
+				List<InnerRank> offenList = new ArrayList<InnerRank>();
 				for (Integer pid : pair.getPersonalScores().keySet()) {
 					ir = new InnerRank();
 					ir.setPid(pid.intValue());
@@ -352,7 +348,7 @@ public class LeagueCombatService implements Service, PacketHandler, EventHandler
 		rst.setPeriod(period);
 		rst.setResult(true);
 		try {
-			List list;
+			List<?> list;
 			LeagueCombat combat = Platform.getLeagueManager().getCombat();
 			if (period == -1) {
 				rst.setPeriodNumber(combat.getCurrentPeriod() - 1);
@@ -397,8 +393,8 @@ public class LeagueCombatService implements Service, PacketHandler, EventHandler
 				map = combat.getCurrentCombatPairs();
 			}
 
-			Map<Integer, InnerRank> ranks = new HashMap();
-			for (Map pairs : map.values()) {
+			Map<Integer, InnerRank> ranks = new HashMap<Integer, InnerRank>();
+			for (Map<?, ?> pairs : map.values()) {
 				pair = (Pair) pairs.get(Integer.valueOf(l.getId()));
 				if (pair != null) {
 					for (Integer pid : pair.getPersonalScores().keySet()) {
@@ -417,7 +413,7 @@ public class LeagueCombatService implements Service, PacketHandler, EventHandler
 				}
 			}
 
-			List<InnerRank> list = new ArrayList(ranks.values());
+			List<InnerRank> list = new ArrayList<InnerRank>(ranks.values());
 			Collections.sort(list, new Comparator<InnerRank>() {
 				public int compare(InnerRank o1, InnerRank o2) {
 					return (o2.getScore() - o1.getScore());
@@ -452,7 +448,7 @@ public class LeagueCombatService implements Service, PacketHandler, EventHandler
 			for (Integer i : map.keySet()) {
 				PbLeague.LCDetailRound.Builder round = PbLeague.LCDetailRound.newBuilder();
 				round.setRound(i.intValue());
-				Map<Integer, Pair> pairs = (Map) map.get(i);
+				Map<Integer, Pair> pairs = (Map<Integer, Pair>) map.get(i);
 				for (Pair pair : pairs.values()) {
 					if (pair != null) {
 						round.addDetailNodes(pair.genDetailNode());
@@ -806,14 +802,14 @@ public class LeagueCombatService implements Service, PacketHandler, EventHandler
 
 	public void sendWeekReward() {
 		LeagueCombat combat = Platform.getLeagueManager().getCombat();
-		for (Iterator localIterator1 = combat.getTmpRanks().iterator(); localIterator1.hasNext();) {
+		for (Iterator<?> localIterator1 = combat.getTmpRanks().iterator(); localIterator1.hasNext();) {
 			int i;
 			LeagueCombatRank cr = (LeagueCombatRank) localIterator1.next();
 			int lRank = combat.getRank(cr.getLeagueId());
 
-			Map ranks = new HashMap();
+			Map<Integer, InnerRank> ranks = new HashMap<Integer, InnerRank>();
 			League l = Platform.getLeagueManager().getLeagueById(cr.getLeagueId());
-			for (Map pairs : combat.getCurrentCombatPairs().values()) {
+			for (Map<?, ?> pairs : combat.getCurrentCombatPairs().values()) {
 				Pair pair = (Pair) pairs.get(Integer.valueOf(cr.getLeagueId()));
 				if (pair != null) {
 					for (Integer pid : pair.getPersonalScores().keySet()) {
@@ -832,7 +828,7 @@ public class LeagueCombatService implements Service, PacketHandler, EventHandler
 				}
 			}
 
-			List list = new ArrayList(ranks.values());
+			List<InnerRank> list = new ArrayList<InnerRank>(ranks.values());
 			Collections.sort(list, new Comparator<InnerRank>() {
 				public int compare(InnerRank o1, InnerRank o2) {
 					return (o2.getScore() - o1.getScore());
@@ -852,115 +848,96 @@ public class LeagueCombatService implements Service, PacketHandler, EventHandler
 	}
 
 	private void loadData() {
-		try {
-			int pos;
-			int count;
-			int add;
-			File file = new File(Configuration.resourcedir, "server/leagueCombat.xlsx");
-			HSSFWorkbook book = new HSSFWorkbook(new FileInputStream(file));
-			HSSFSheet sheet = book.getSheetAt(0);
-			Row row;
-			int rows = sheet.getPhysicalNumberOfRows();
-			for (int i = 1; i < rows; ++i) {
-				pos = 0;
-				row = sheet.getRow(i);
-				if (row == null) {
-					return;
-				}
-				if (row.getCell(pos) == null) {
-					return;
-				}
-
-				int type = (int) row.getCell(pos++).getNumericCellValue();
-				++pos;
-				int rate = (int) row.getCell(pos++).getNumericCellValue();
-				cityRates.put(Integer.valueOf(type), Integer.valueOf(rate));
+		int pos;
+		List<Row> list0 = ExcelUtils.getRowList("leagueCombat.xls", 2, 0);
+		for (Row row : list0) {
+			pos = 0;
+			if (row == null) {
+				return;
+			}
+			if (row.getCell(pos) == null) {
+				return;
 			}
 
-			sheet = book.getSheetAt(1);
-			rows = sheet.getPhysicalNumberOfRows();
-			for (int i = 1; i < rows; ++i) {
-				pos = 0;
-				row = sheet.getRow(i);
-				if (row == null) {
-					return;
-				}
-				if (row.getCell(pos) == null) {
-					return;
-				}
+			int type = (int) row.getCell(pos++).getNumericCellValue();
+			++pos;
+			int rate = (int) row.getCell(pos++).getNumericCellValue();
+			cityRates.put(Integer.valueOf(type), Integer.valueOf(rate));
+		}
 
-				int country = (int) row.getCell(pos++).getNumericCellValue();
-				int buffId = (int) row.getCell(pos++).getNumericCellValue();
-				countryBuffs.put(Integer.valueOf(country), Integer.valueOf(buffId));
+		List<Row> list1 = ExcelUtils.getRowList("leagueCombat.xls", 2, 1);
+		for (Row row : list1) {
+			pos = 0;
+			if (row == null) {
+				return;
+			}
+			if (row.getCell(pos) == null) {
+				return;
 			}
 
-			sheet = book.getSheetAt(2);
-			rows = sheet.getPhysicalNumberOfRows();
-			for (int i = 1; i < rows; ++i) {
-				pos = 0;
-				row = sheet.getRow(i);
-				if (row == null) {
-					return;
-				}
-				if (row.getCell(pos) == null) {
-					return;
-				}
+			int country = (int) row.getCell(pos++).getNumericCellValue();
+			int buffId = (int) row.getCell(pos++).getNumericCellValue();
+			countryBuffs.put(Integer.valueOf(country), Integer.valueOf(buffId));
+		}
 
-				count = (int) row.getCell(pos++).getNumericCellValue();
-				add = (int) row.getCell(pos++).getNumericCellValue();
-				cityAtkAdds.put(Integer.valueOf(count), Integer.valueOf(add));
+		List<Row> list2 = ExcelUtils.getRowList("leagueCombat.xls", 2, 2);
+		for (Row row : list2) {
+			pos = 0;
+			if (row == null) {
+				return;
+			}
+			if (row.getCell(pos) == null) {
+				return;
 			}
 
-			sheet = book.getSheetAt(3);
-			if (sheet != null) {
-				String l;
-				String rw = sheet.getRow(1).getCell(1).getStringCellValue();
-				String[] ls = rw.split(",");
-				for (String s : ls) {
-					winRewards.add(new Reward(s));
-				}
+			int count = (int) row.getCell(pos++).getNumericCellValue();
+			int add = (int) row.getCell(pos++).getNumericCellValue();
+			cityAtkAdds.put(Integer.valueOf(count), Integer.valueOf(add));
+		}
 
-				rw = sheet.getRow(2).getCell(1).getStringCellValue();
-				ls = rw.split(",");
-				for (String s : ls) {
-					loseRewards.add(new Reward(s));
-				}
-
+		List<Row> list3 = ExcelUtils.getRowList("leagueCombat.xls", 2, 3);
+		if (list3.size() > 0) {
+			String rw = list3.get(0).getCell(1).getStringCellValue();
+			String[] ls = rw.split(",");
+			for (String s : ls) {
+				winRewards.add(new Reward(s));
 			}
 
-			sheet = book.getSheetAt(4);
-			rows = sheet.getPhysicalNumberOfRows();
-			for (int i = 1; i < rows; ++i) {
-				pos = 0;
-				row = sheet.getRow(i);
-				if (row == null) {
-					return;
-				}
-				if (row.getCell(pos) == null) {
-					return;
-				}
-
-				int id = (int) row.getCell(pos++).getNumericCellValue();
-				int lStart = (int) row.getCell(pos++).getNumericCellValue();
-				int lEnd = (int) row.getCell(pos++).getNumericCellValue();
-				int pStart = (int) row.getCell(pos++).getNumericCellValue();
-				int pEnd = (int) row.getCell(pos++).getNumericCellValue();
-				String rw = row.getCell(pos++).getStringCellValue();
-
-				WeekReward dr = new WeekReward();
-				String[] ls = rw.split(",");
-				for (String l : ls) {
-					dr.rewards.add(new Reward(l));
-				}
-				dr.id = id;
-				dr.pEnd = pEnd;
-				dr.pStart = pStart;
-				dr.lStart = lStart;
-				dr.lEnd = lEnd;
-				weekRewards.add(dr);
+			rw = list3.get(1).getCell(1).getStringCellValue();
+			ls = rw.split(",");
+			for (String s : ls) {
+				loseRewards.add(new Reward(s));
 			}
-		} catch (Exception e) {
-			throw new IllegalArgumentException(e);
+
+		}
+
+		List<Row> list4 = ExcelUtils.getRowList("leagueCombat.xls", 2, 4);
+		for (Row row : list4) {
+			pos = 0;
+			if (row == null) {
+				return;
+			}
+			if (row.getCell(pos) == null) {
+				return;
+			}
+			int id = (int) row.getCell(pos++).getNumericCellValue();
+			int lStart = (int) row.getCell(pos++).getNumericCellValue();
+			int lEnd = (int) row.getCell(pos++).getNumericCellValue();
+			int pStart = (int) row.getCell(pos++).getNumericCellValue();
+			int pEnd = (int) row.getCell(pos++).getNumericCellValue();
+			String rw = row.getCell(pos++).getStringCellValue();
+
+			WeekReward dr = new WeekReward();
+			String[] ls = rw.split(",");
+			for (String l : ls) {
+				dr.rewards.add(new Reward(l));
+			}
+			dr.id = id;
+			dr.pEnd = pEnd;
+			dr.pStart = pStart;
+			dr.lStart = lStart;
+			dr.lEnd = lEnd;
+			weekRewards.add(dr);
 		}
 	}
 }

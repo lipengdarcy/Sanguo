@@ -13,7 +13,7 @@
 	<numbers>1</numbers>
 	
 	<!--本游戏服务器对外IP地址-->
-	<serverip>127.0.0.1</serverip>
+	<serverip>192.168.1.111</serverip>
 	<!--本游戏服务器对外端口-->
 	<serverport>12018</serverport>
 	
@@ -25,14 +25,14 @@
 	</gates>
 	
 	<!--GM服务器IP地址-->
-	<gmip>127.0.0.1</gmip>
+	<gmip>192.168.1.111</gmip>
 	<!--GM服务器端口-->
 	<gmport>12088</gmport>
 	<!--GM心跳URL-->
-	<gmheart>http://192.168.1.3:8081/sangogm</gmheart>
+	<gmheart>http://192.168.1.111:8081/sangogm</gmheart>
 	
 	<!-- billing地址 -->
-	<billing>http://192.168.1.3:8081/billing</billing>
+	<billing>http://192.168.1.111:8081/billing</billing>
 	
 	<!--开启推送充值模式，目前仅台湾版官网充值使用  1：开启  0：关闭-->
 	<pushpay>0</pushpay>

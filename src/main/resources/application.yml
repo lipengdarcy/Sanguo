@@ -13,24 +13,9 @@ logging:
     root: info
     cn.smarthse.business.service: debug
     cn.smarthse.business.dao: debug
-  file: log/SpringBoot.log
+  file: logs/SpringBoot.log
 
 spring:
-  #Dubbo 服务提供者配置
-  dubbo:
-    application: SpringBoot-provider    #提供方服务名称
-    registry:
-      #address: zookeeper://192.168.1.188:2181   #zookeeper注册中心地址
-    protocol:
-      name: dubbo     #dubbo 协议
-      port: 20886
-    scan: cn.smarthse.business.service.dubbo #声明需要暴露的服务接口
-  #mongodb配置
-  data:
-    mongodb:
-      host: 192.168.1.111
-      port: 27017
-      database: test
   #数据源配置（多数据源）
   datasource:
     use-global-data-source-stat: true
