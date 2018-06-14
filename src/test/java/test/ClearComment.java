@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 public class ClearComment {
 
 	/** 根目录 */
-	public static String rootDir = "C:\\Users\\darcy\\Desktop\\com";
+	public static String rootDir = "C:\\Users\\darcy\\Desktop\\gate.src";
 
 	public static void main(String args[]) throws FileNotFoundException, UnsupportedEncodingException {
 		deepDir(rootDir);

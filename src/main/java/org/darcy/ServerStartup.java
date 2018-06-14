@@ -36,15 +36,18 @@ import org.darcy.sanguo.relation.RelationService;
 import org.darcy.sanguo.service.AccountService;
 import org.darcy.sanguo.service.ActivityService;
 import org.darcy.sanguo.service.ArenaService;
+import org.darcy.sanguo.service.BossService;
 import org.darcy.sanguo.service.CoupService;
 import org.darcy.sanguo.service.DestinyService;
 import org.darcy.sanguo.service.ExchangeService;
 import org.darcy.sanguo.service.GlobalDropService;
 import org.darcy.sanguo.service.GloryService;
 import org.darcy.sanguo.service.HeroService;
+import org.darcy.sanguo.service.MailService;
 import org.darcy.sanguo.service.MapService;
 import org.darcy.sanguo.service.NoticeService;
 import org.darcy.sanguo.service.PayReturnService;
+import org.darcy.sanguo.service.PayService;
 import org.darcy.sanguo.service.PlayerService;
 import org.darcy.sanguo.service.RewardService;
 import org.darcy.sanguo.service.RobotService;
@@ -136,14 +139,14 @@ public class ServerStartup implements Runnable {
 		Platform.getServiceManager().add(new RandomShopService());
 		Platform.getServiceManager().add(new ArenaService());
 		Platform.setBossManager(new BossManager());
-		//Platform.getServiceManager().add(new BossService());
+		Platform.getServiceManager().add(new BossService());
 		Platform.getServiceManager().add(new TowerService());
 		TopManager tm = new TopManager();
-		//tm.init();
+		tm.init();
 		Platform.setTopManager(tm);
 		Platform.getServiceManager().add(new RelationService());
 		Platform.getServiceManager().add(new DestinyService());
-		//Platform.getServiceManager().add(new MailService());
+		Platform.getServiceManager().add(new MailService());
 		Platform.getServiceManager().add(new CoupService());
 		Platform.getServiceManager().add(new DivineService());
 		Platform.getServiceManager().add(new ChatService());
@@ -154,8 +157,7 @@ public class ServerStartup implements Runnable {
 		Platform.getServiceManager().add(new GlobalDropService());
 		Platform.getServiceManager().add(new AwardsService());
 		Platform.getServiceManager().add(new VipService());
-		//Platform.getServiceManager().add(new PayService());
-
+		Platform.getServiceManager().add(new PayService());
 		ClientSessionManager clientSessionManager = new ClientSessionManager();
 		Platform.setClientSessionManager(clientSessionManager);
 		Platform.getUpdaterManager().addSyncUpdatable(clientSessionManager);
@@ -175,13 +177,12 @@ public class ServerStartup implements Runnable {
 		Platform.getServiceManager().add(new LeagueCombatService());
 		Platform.getUpdaterManager().addSyncUpdatable(Platform.getLeagueManager().getCombat());
 
-		World world = (World) ((DbService) Platform.getServiceManager().get(DbService.class)).get(World.class,
-				Integer.valueOf(1));
+		World world = (World) ((DbService) Platform.getServiceManager().get(DbService.class)).get(World.class, Integer.valueOf(1));
 		if (world == null) {
 			world = new World();
 			world.setId(1);
 			world.setCreateRobot(0);
-			((DbService) Platform.getServiceManager().get(DbService.class)).add(world);
+			//((DbService) Platform.getServiceManager().get(DbService.class)).add(world);
 			world.init();
 			Platform.setWorld(world);
 			DBUtil.updatePlayerAutoIncrement();
@@ -189,16 +190,11 @@ public class ServerStartup implements Runnable {
 			ActivityService.startRank7Activity();
 			Platform.getEntityManager().putInEhCache("persist", "CACHE_KEY_OPENSERVERTIME",
 					Long.valueOf(System.currentTimeMillis()));
-		} else {
-			world.init();
-			Platform.setWorld(world);
 		}
 
 		Platform.getServiceManager().add(new RobotService());
 		Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook()));
-
 		Platform.getPlayerManager().loadMiniPlayer();
-
 		long b = System.currentTimeMillis();
 		Platform.getTopManager().refreshBTLRank();
 		Platform.getLog().logSystem("rank btl cost : " + (System.currentTimeMillis() - b));
@@ -208,14 +204,12 @@ public class ServerStartup implements Runnable {
 		long d = System.currentTimeMillis();
 		Platform.getTopManager().loadOldRanks();
 		Platform.getLog().logSystem("rank load cost : " + (System.currentTimeMillis() - d));
-
 		Thread t = new Thread(new AsyncRanker(), "AsyncRanker");
 		t.setDaemon(true);
 		t.start();
 		Thread timer = new Thread(new Time(), "Timer");
 		timer.setDaemon(true);
 		timer.start();
-
 		Platform.getServiceManager().add(new GateService());
 		Platform.getServiceManager().add(new NettyService());
 	}

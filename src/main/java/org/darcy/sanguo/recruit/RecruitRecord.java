@@ -23,7 +23,7 @@ public class RecruitRecord implements PlayerBlobEntity {
 	private static final long serialVersionUID = -3822805786710125746L;
 	private static int VERSION = 1;
 
-	private Map<Integer, RecruitInfo> recruitInfos = new HashMap();
+	private Map<Integer, RecruitInfo> recruitInfos = new HashMap<Integer, RecruitInfo>();
 
 	public RecruitRecord() {
 		this.recruitInfos.put(Integer.valueOf(1), new RecruitInfo(1));
@@ -112,7 +112,7 @@ public class RecruitRecord implements PlayerBlobEntity {
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
 		try {
 			int version = in.readInt();
-			this.recruitInfos = new HashMap();
+			this.recruitInfos = new HashMap<Integer, RecruitInfo>();
 			RecruitInfo info = new RecruitInfo(1);
 			info.readObject(in);
 			this.recruitInfos.put(Integer.valueOf(info.id), info);
@@ -123,7 +123,7 @@ public class RecruitRecord implements PlayerBlobEntity {
 			info.readObject(in);
 			this.recruitInfos.put(Integer.valueOf(info.id), info);
 		} catch (Exception e) {
-			this.recruitInfos = new HashMap();
+			this.recruitInfos = new HashMap<Integer, RecruitInfo>();
 			this.recruitInfos.put(Integer.valueOf(1), new RecruitInfo(1));
 			this.recruitInfos.put(Integer.valueOf(2), new RecruitInfo(2));
 			this.recruitInfos.put(Integer.valueOf(3), new RecruitInfo(3));
@@ -133,7 +133,7 @@ public class RecruitRecord implements PlayerBlobEntity {
 
 	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.writeInt(VERSION);
-		Iterator itx = this.recruitInfos.keySet().iterator();
+		Iterator<Integer> itx = this.recruitInfos.keySet().iterator();
 		while (itx.hasNext()) {
 			int key = ((Integer) itx.next()).intValue();
 			RecruitInfo info = (RecruitInfo) this.recruitInfos.get(Integer.valueOf(key));

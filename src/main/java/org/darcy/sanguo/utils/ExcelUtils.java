@@ -91,4 +91,47 @@ public class ExcelUtils {
 		return result;
 	}
 
+	/**
+	 * 根据文件名称，获取网关配置信息
+	 * 
+	 * @param fileName
+	 *            excel文件的路径，如：effect.xls
+	 * @param type
+	 *            1：commons； 2：server
+	 * @param sheetIndex
+	 *            excel文件的sheet下标
+	 */
+	public static List<Row> getGateInfo(String fileName) {
+		String prefix = "cfg/gate/";
+		List<Row> result = new ArrayList<Row>();
+		HSSFWorkbook book = null;
+		try {
+			URL url = ServerStartup.class.getClassLoader().getResource(prefix + fileName);
+			File f = new File(url.getFile());
+			book = new HSSFWorkbook(new FileInputStream(f));
+			HSSFSheet sheet = book.getSheetAt(0);
+			int rowIndex = 0;// 行号
+			for (Iterator<Row> iter = (Iterator<Row>) sheet.rowIterator(); iter.hasNext();) {
+				Row row = iter.next();
+				rowIndex++;
+				// 第1行是表头，非数据，跳过
+				if (rowIndex <= 1) {
+					continue;
+				}
+				result.add(row);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				book.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
 }

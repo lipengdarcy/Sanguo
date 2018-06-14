@@ -27,6 +27,7 @@ import org.darcy.sanguo.player.Player;
 import org.darcy.sanguo.service.common.FunctionService;
 import org.darcy.sanguo.service.common.ItemService;
 import org.darcy.sanguo.util.Calc;
+import org.darcy.sanguo.utils.ExcelUtils;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -75,53 +76,41 @@ public class GloryService implements Service, PacketHandler {
 	}
 
 	private void loadGlory() {
-		try {
-			int pos;
-			Row row;
-			File file = new File(Configuration.resourcedir, "commons/glory.xlsx");
-			HSSFWorkbook book = new HSSFWorkbook(new FileInputStream(file));
-			HSSFSheet sheet = book.getSheetAt(0);
-			int rows = sheet.getPhysicalNumberOfRows();
-			for (int i = 3; i < rows; ++i) {
-				pos = 0;
-				row = sheet.getRow(i);
-				if (row == null) {
-					break;
-				}
-				if (row.getCell(pos) == null) {
-					break;
-				}
-				GloryTemplate t = new GloryTemplate();
-				t.id = (int) row.getCell(pos++).getNumericCellValue();
-				row.getCell(pos).setCellType(1);
-				t.name = row.getCell(pos++).getStringCellValue();
-				t.type = (int) row.getCell(pos++).getNumericCellValue();
-				++pos;
-				String str = row.getCell(pos++).getStringCellValue();
-				t.frontBuffs = Calc.split(str, ",");
-				str = row.getCell(pos++).getStringCellValue();
-				t.behindBuffs = Calc.split(str, ",");
-
-				glories.put(Integer.valueOf(t.id), t);
+		int pos;
+		List<Row> list0 = ExcelUtils.getRowList("glory.xls", 1, 0);
+		for (Row row : list0) {
+			pos = 0;
+			if (row == null) {
+				break;
 			}
-
-			sheet = book.getSheetAt(1);
-			rows = sheet.getPhysicalNumberOfRows();
-			for (int i = 3; i < rows; ++i) {
-				pos = 0;
-				row = sheet.getRow(i);
-				if (row == null) {
-					return;
-				}
-				if (row.getCell(pos) == null) {
-					return;
-				}
-				int type = (int) row.getCell(pos++).getNumericCellValue();
-				int id = (int) row.getCell(pos++).getNumericCellValue();
-				gloryOpen.put(Integer.valueOf(type), Integer.valueOf(id));
+			if (row.getCell(pos) == null) {
+				break;
 			}
-		} catch (Exception e) {
-			Platform.getLog().logError(e);
+			GloryTemplate t = new GloryTemplate();
+			t.id = (int) row.getCell(pos++).getNumericCellValue();
+			t.name = row.getCell(pos++).getStringCellValue();
+			t.type = (int) row.getCell(pos++).getNumericCellValue();
+			++pos;
+			String str = row.getCell(pos++).getStringCellValue();
+			t.frontBuffs = Calc.split(str, ",");
+			str = row.getCell(pos++).getStringCellValue();
+			t.behindBuffs = Calc.split(str, ",");
+
+			glories.put(Integer.valueOf(t.id), t);
+		}
+
+		List<Row> list1 = ExcelUtils.getRowList("glory.xls", 1, 1);
+		for (Row row : list1) {
+			pos = 0;
+			if (row == null) {
+				return;
+			}
+			if (row.getCell(pos) == null) {
+				return;
+			}
+			int type = (int) row.getCell(pos++).getNumericCellValue();
+			int id = (int) row.getCell(pos++).getNumericCellValue();
+			gloryOpen.put(Integer.valueOf(type), Integer.valueOf(id));
 		}
 	}
 

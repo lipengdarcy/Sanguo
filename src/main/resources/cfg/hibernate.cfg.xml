@@ -5,28 +5,54 @@
 <hibernate-configuration>
 
 	<session-factory>
-		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-		<!--请务必确认此处db的ip、端口以及实例名 -->
-		<property name="connection.url">jdbc:mysql://localhost:3306/sanguo?useUnicode=true&amp;characterEncoding=UTF8</property>
-		<property name="connection.username">root</property>
-		<property name="connection.password">123456</property>
-		<property name="hibernate.connection.pool.size">100</property>
-		<property name="hibernate.show_sql">false</property>
-		<property name="hibernate.hbm2ddl">update</property>
+		<property name="driverClassName">com.mysql.jdbc.Driver</property>
 		<property name="hibernate.connection.provider_class">com.alibaba.druid.support.hibernate.DruidConnectionProvider</property>
-		<property name="hibernate.c3p0.max_size">300</property>
-		<property name="hibernate.c3p0.min_size">5</property>
-		<property name="hibernate.c3p0.timeout">120</property>
-		<property name="hibernate.c3p0.max_statements">100</property>
-		<property name="hibernate.c3p0.idle_test_period">120</property>
-		<property name="hibernate.c3p0.acquire_increment">1</property>
-		<property name="jdbc.fetch_size">100</property>
-		<property name="jdbc.batch_size">100</property>
+		<!-- 连接信息 -->
+		<property name="url">jdbc:mysql://localhost:3306/sanguo?useUnicode=true&amp;characterEncoding=UTF8</property>
+		<property name="username">root</property>
+		<property name="password">123456</property>
+		
+		<property name="hibernate.connection.pool.size">100</property>
+		<property name="hibernate.hbm2ddl">update</property>
 		<property name="hibernate.cache.use_second_level_cache">false</property>
 		<property name="current_session_context_class">thread</property>
 		<property name="hibernate.generate_statistics">false</property>
-		
+
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize">1</property>
+		<property name="minIdle">1</property>
+		<property name="maxActive">20</property>
+
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait">60000</property>
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis">60000</property>
+
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis">300000</property>
+
+
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements">true</property>
+		<property name="maxPoolPreparedStatementPerConnectionSize">20</property>
+
+		<!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计 -->
+		<property name="filters">stat</property>
+
+		<!-- SQL dialect -->
+		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+
+		<!-- Enable Hibernate's automatic session context management -->
+		<property name="current_session_context_class">thread</property>
+
+		<!-- Disable the second-level cache -->
+		<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+		<!-- 显示sql语句 -->
+		<property name="show_sql">true</property>
+
+
 		<mapping resource="cfg/mapping/player.hbm.xml" />
 		<mapping resource="cfg/mapping/miniplayer.hbm.xml" />
 		<mapping resource="cfg/mapping/world.hbm.xml" />
