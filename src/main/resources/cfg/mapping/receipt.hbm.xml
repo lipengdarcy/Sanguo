@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.darcy.sanguo.pay">
+	<class name="Receipt" table="receipt">
+		<id name="orderId" column="orderid" type="string">
+			<generator class="assigned"/>
+		</id>
+		<property name="pid" column="pid" type="int" />
+		<property name="coOrderId" column="coorderid" type="string" />
+		<property name="goodsId" column="goodsid" type="int" />
+		<property name="coGoodsId" column="cogoodsid" type="string" />
+		<property name="price" column="price" type="int" />
+		<property name="state" column="state" type="int" />
+		<property name="updateTime" column="updateTime" type="timestamp" />
+		<property name="createTime" column="createTime" type="timestamp" />
+		<property name="channel" column="channel" type="string" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.darcy.sanguo.boss">
+	<class name="BossData" table="boss">
+		<id name="id" column="id" type="int">
+			<generator class="assigned"/>
+		</id>
+		<property name="serverId" column="serverid" type="int" />
+		<property name="open" column="open" type="boolean" />
+		<property name="bossLevel" column="bosslevel" type="int" />
+		<property name="killer" column="killer" type="int" />
+		<property name="ranks" column="ranks" type="org.darcy.sanguo.usertype.ListIntUserType" />
+	</class>
+</hibernate-mapping>

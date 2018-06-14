@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.darcy.sanguo.awardcenter">
+	<class name="Awards" table="awards">
+		<id name="playerId" column="player_id" type="int">
+			<generator class="assigned" />
+		</id>
+		<property name="awardIdCount" column="award_id_count" type="int" />
+		<property name="info" column="info" type="org.darcy.sanguo.usertype.AwardInfoUserType" />
+	</class>
+</hibernate-mapping>

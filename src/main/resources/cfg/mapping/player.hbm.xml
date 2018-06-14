@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.darcy.sanguo.player">
+	<class name="Player" table="player">
+		<id name="id" column="id" type="int">
+			<generator class="native"/>
+		</id>
+		<property name="name" column="name" type="string" />
+		<property name="accountId" column="account_id" type="string" />
+		<property name="channelType" column="channel_type" type="int" />
+		<property name="gender" column="gender" type="int" />
+		<property name="exp" column="exp" type="int" />
+		<property name="level" column="level" type="int" />
+		<property name="vitality" column="vitality" type="int" />
+		<property name="lastRecoverVitality" column="last_recover_vitality" type="long" />
+		<property name="jewels" column="jewels" type="int" />
+		<property name="lastRefreshDay" column="lastRefreshDay" type="int" />
+		<property name="registerTime" column="register_time" type="long" />
+		<property name="money" column="money" type="int" />
+		<property name="stamina" column="stamina" type="int" />
+		<property name="staminaLimit" column="stamina_limit" type="int" />
+		<property name="honor" column="honor" type="int" />
+		<property name="prestige" column="prestige" type="int" />
+		<property name="lastRecoverStamina" column="last_recover_stamina" type="long" />
+		<property name="warriorSpirit" column="warrior_spirit" type="int" />
+		<property name="spiritJade" column="spirit_jade" type="int" />
+		<property name="heroIds" column="heroIds" type="string" />
+		<property name="btlCapability" column="btlCapability" type="int" />
+		<property name="blob" column="player_blob" type="org.darcy.sanguo.usertype.PlayerBlobUserType" />
+		<property name="charge" column="charge" type="int" />
+		<property name="lastLogin" column="lastlogin" type="timestamp" />
+		<property name="lastLogout" column="lastlogout" type="timestamp" />
+	</class>
+</hibernate-mapping>

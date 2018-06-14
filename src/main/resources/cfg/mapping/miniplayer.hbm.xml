@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.darcy.sanguo.player">
+	<class name="MiniPlayer" table="player">
+		<id name="id" column="id" type="int">
+			<generator class="native"/>
+		</id>
+		<property name="name" column="name" type="string" />
+		<property name="level" column="level" type="int" />
+		<property name="heroIds" column="heroIds" type="string" />
+		<property name="btlCapability" column="btlCapability" type="int" />
+		<property name="lastLogout" column="lastlogout" type="timestamp" />
+	</class>
+</hibernate-mapping>

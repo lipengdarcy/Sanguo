@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.darcy.sanguo.world">
+	<class name="World" table="world">
+		<id name="id" column="id" type="int" >
+			<generator class="assigned"/>
+		</id>
+		<property name="arenaCount" column="arena_count" type="int" />
+		<property name="worldCompetitionCount" column="world_competition_count" type="int" />
+		<property name="createRobot" column="create_robot" type="int" />
+		<property name="leagueCombatData" column="league_combat_data" type="org.darcy.sanguo.usertype.CombatDataUserType" />
+	</class>
+</hibernate-mapping>

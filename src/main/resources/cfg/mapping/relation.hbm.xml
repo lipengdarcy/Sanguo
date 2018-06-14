@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.darcy.sanguo.relation">
+	<class name="Relations" table="relations">
+		<id name="id" column="id" type="int">
+			<generator class="assigned"/>
+		</id>
+		<property name="getStaminaTimes" column="get_stamina_times" type="int" />
+		<property name="replyers" column="replyers" type="org.darcy.sanguo.usertype.RelationUserType" />
+		<property name="friends" column="friends" type="org.darcy.sanguo.usertype.RelationUserType" />
+		<property name="giveRecords" column="give_records" type="org.darcy.sanguo.usertype.SetIntUserType" />
+		<property name="givenStaminas" column="given_staminas" type="org.darcy.sanguo.usertype.MapIntLongUserType" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+	http://www.springframework.org/schema/beans/spring-beans.xsd        
+	http://code.alibabatech.com/schema/dubbo        
+	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:application name="SpringBootDubbo-Service" />
+
+	<!-- zookeeper注册中心 -->
+	<dubbo:registry id="SpringBootDubbo" protocol="zookeeper"
+		address="zookeeper://192.168.1.188:2181"></dubbo:registry>
+
+	<!-- zookeeper注册中心： aliyun -->
+	<!-- <dubbo:registry id="local" protocol="zookeeper" address="zookeeper://101.37.254.216:2181"></dubbo:registry> -->
+
+	<dubbo:consumer check="false" timeout="1200000" />
+	<dubbo:provider timeout="1200000" />
+
+	<!-- 用dubbo协议在20886端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="20886" />
+
+
+	<!-- 提供给平台的接口 -->
+	<dubbo:service interface="cn.smarthse.business.service.dubbo.DubboTestService"
+		ref="dubboTestService" />
+	<bean id="dubboTestService" class="cn.smarthse.business.service.dubbo.impl.DubboTestServiceImpl" />
+
+
+	<!-- 调用平台的接口 -->
+	<dubbo:reference id="iPUserService"
+		interface="cn.smarthse.modules.platform.provider.IPUserService" />
+	<dubbo:reference id="iWechatService"
+		interface="cn.smarthse.modules.platform.provider.IWechatService" />
+
+</beans>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.darcy.sanguo.charge">
+	<class name="Charge" table="Charge">
+		<id name="id" column="id" type="int">
+			<generator class="native" />
+		</id>
+		<property name="channel" column="_channel" type="java.lang.String" />
+		<property name="name" column="_name" type="java.lang.String" />
+		<property name="goodsId" column="_goodsId" type="int" />
+		<property name="done" column="_done" type="int" />
+		<property name="rmb" column="_rmb" type="int" />
+	</class>
+</hibernate-mapping>

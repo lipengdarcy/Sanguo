@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>home page</title>
+<#include "/html/header.html">
+</head>
+<body>
+	<h3>首页</h3>
+	<ul>
+		<li><a href="area">系统区域列表</a></li>
+		<li><a href="mongo">Mongo用户列表</a></li>
+		<li><a href="mongo/logList">系统日志列表</a></li>
+		<li><a href="jms">jms调用测试</a></li>
+	</ul>
+	<img alt="" src="/image/1.jpg">
+	<script type="text/javascript">
+	$(function(){
+
+		$.ajax({
+			url : 'http://192.168.1.111:9200/accounts/person/1 ',
+			data : {
+				 "name" : "John",
+				    "lastname" : "Doe",
+				    "job_description" : "Systems administrator and Linux specialit"
+			},
+			type : 'post',
+			dataType : 'json',
+			success : function(data) {
+				$.jGrowl(data.message);				
+			},
+			error : function() {
+				$.jGrowl("异常！请重新尝试或者联系管理员！", {
+					header : "提醒"
+				});
+			}
+		});
+	})
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+	<session-factory>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+		<!--请务必确认此处db的ip、端口以及实例名 -->
+		<property name="connection.url">jdbc:mysql://localhost:3306/sanguo?useUnicode=true&amp;characterEncoding=UTF8</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">123456</property>
+		<property name="hibernate.connection.pool.size">100</property>
+		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.hbm2ddl">update</property>
+		<property name="hibernate.connection.provider_class">com.alibaba.druid.support.hibernate.DruidConnectionProvider</property>
+		<property name="hibernate.c3p0.max_size">300</property>
+		<property name="hibernate.c3p0.min_size">5</property>
+		<property name="hibernate.c3p0.timeout">120</property>
+		<property name="hibernate.c3p0.max_statements">100</property>
+		<property name="hibernate.c3p0.idle_test_period">120</property>
+		<property name="hibernate.c3p0.acquire_increment">1</property>
+		<property name="jdbc.fetch_size">100</property>
+		<property name="jdbc.batch_size">100</property>
+		<property name="hibernate.cache.use_second_level_cache">false</property>
+		<property name="current_session_context_class">thread</property>
+		<property name="hibernate.generate_statistics">false</property>
+		
+		<mapping resource="cfg/mapping/player.hbm.xml" />
+		<mapping resource="cfg/mapping/miniplayer.hbm.xml" />
+		<mapping resource="cfg/mapping/world.hbm.xml" />
+		<mapping resource="cfg/mapping/arena.hbm.xml" />
+		<mapping resource="cfg/mapping/top.hbm.xml" />
+		<mapping resource="cfg/mapping/relation.hbm.xml" />
+		<mapping resource="cfg/mapping/awards.hbm.xml" />
+		<mapping resource="cfg/mapping/boss.hbm.xml" />
+		<mapping resource="cfg/mapping/mail.hbm.xml" />
+		<mapping resource="cfg/mapping/worldcompetition.hbm.xml" />
+		<mapping resource="cfg/mapping/receipt.hbm.xml" />
+		<mapping resource="cfg/mapping/league.hbm.xml" />
+		<mapping resource="cfg/mapping/union.hbm.xml" />
+		<mapping resource="cfg/mapping/Charge.hbm.xml" />
+	</session-factory>
+
+</hibernate-configuration>

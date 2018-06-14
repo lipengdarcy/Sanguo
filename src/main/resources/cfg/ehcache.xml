@@ -1,0 +1,56 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+	updateCheck="false">
+
+	<diskStore path="user.dir/ehcachedata" />
+
+	<defaultCache maxElementsInMemory="10000" eternal="false"
+		timeToIdleSeconds="172800" memoryStoreEvictionPolicy="LRU"
+		overflowToDisk="false" />
+
+	<cache name="debrisown" maxElementsInMemory="1000" eternal="true"
+		overflowToDisk="true" timeToIdleSeconds="172800" diskPersistent="true"
+		timeToLiveSeconds="172800" />
+
+
+	<cache name="shieldinfo" maxElementsInMemory="1000" eternal="true"
+		overflowToDisk="true" timeToIdleSeconds="172800" diskPersistent="true"
+		timeToLiveSeconds="172800" />
+
+	<cache name="common" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="true" timeToIdleSeconds="604800" diskPersistent="true"
+		timeToLiveSeconds="604800" />
+
+	<!-- 持久化的cache -->
+	<cache name="persist" maxElementsInMemory="1000" eternal="true"
+		overflowToDisk="true" diskPersistent="true" />
+
+	<!-- 默认账号封停一周 -->
+	<cache name="banaccount" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="true" timeToIdleSeconds="604800" diskPersistent="true"
+		timeToLiveSeconds="604800" />
+
+	<!-- 默认ip封停一周 -->
+	<cache name="banip" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="true" timeToIdleSeconds="604800" diskPersistent="true"
+		timeToLiveSeconds="604800" />
+
+	<!-- 默认充值封停一周 -->
+	<cache name="bancharge" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="true" timeToIdleSeconds="604800" diskPersistent="true"
+		timeToLiveSeconds="604800" />
+
+	<!-- 全服邮件 -->
+	<cache name="globalmail" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="true" timeToIdleSeconds="604800" diskPersistent="true"
+		timeToLiveSeconds="604800" />
+
+	<cache name="chatCD" maxElementsInMemory="10000" eternal="false"
+		overflowToDisk="false" timeToLiveSeconds="5" />
+
+	<cache name="timelimitreward" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="true" timeToIdleSeconds="604800" diskPersistent="true"
+		timeToLiveSeconds="604800" />
+
+
+</ehcache>

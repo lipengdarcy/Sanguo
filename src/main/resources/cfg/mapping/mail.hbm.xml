@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.darcy.sanguo.mail">
+	<class name="Mail" table="email">
+		<id name="id" column="id" type="int">
+			<generator class="native"/>
+		</id>
+		<property name="type" column="type" type="int" />
+		<property name="sourceId" column="sourceId" type="int" />
+		<property name="sourceName" column="sourceName" type="string" />
+		<property name="targetId" column="targetId" type="int" />
+		<property name="sendTime" column="sendtime" type="java.util.Date" />
+		<property name="content" column="content" type="string" />
+		<property name="title" column="ttitle" type="string" />
+		<property name="read" column="iread" type="java.lang.Boolean" />
+		<property name="attachment" column="attach" type="org.darcy.sanguo.usertype.AttachUserType" />
+	</class>
+</hibernate-mapping>

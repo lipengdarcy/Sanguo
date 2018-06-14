@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.darcy.sanguo.worldcompetition">
+	<class name="WorldCompetition" table="worldcompetition">
+		<id name="playerId" column="player_id" type="int">
+			<generator class="assigned" />
+		</id>
+		<property name="rank" column="rank" type="int" />
+		<property name="score" column="score" type="int" />
+		<property name="lastLoad" column="last_load" type="long" />
+		<property name="lastReward" column="last_reward" type="long" />
+		<property name="enemy" column="enemy" type="org.darcy.sanguo.usertype.EnemyUserType" />
+	</class>
+</hibernate-mapping>
