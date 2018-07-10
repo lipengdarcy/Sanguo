@@ -4,8 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.text.MessageFormat;
 import java.util.Base64;
 
+import org.darcy.gate.net.ClientSession;
 import org.darcy.sanguo.Platform;
-import org.darcy.sanguo.net.ClientSession;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;

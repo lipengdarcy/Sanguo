@@ -12,6 +12,8 @@ import io.netty.handler.codec.MessageToMessageEncoder;
 
 @ChannelHandler.Sharable
 public class SangoProtobufEncoder extends MessageToMessageEncoder<MessageLiteOrBuilder> {
+
+	@Override
 	protected void encode(ChannelHandlerContext ctx, MessageLiteOrBuilder msg, List<Object> out) throws Exception {
 		if (msg instanceof MessageLite) {
 			out.add(Unpooled.wrappedBuffer(((MessageLite) msg).toByteArray()));
@@ -20,4 +22,5 @@ public class SangoProtobufEncoder extends MessageToMessageEncoder<MessageLiteOrB
 		if (msg instanceof MessageLite.Builder)
 			out.add(Unpooled.wrappedBuffer(((MessageLite.Builder) msg).build().toByteArray()));
 	}
+
 }

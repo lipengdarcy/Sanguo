@@ -1,5 +1,9 @@
 package org.darcy.sanguo.net;
 
+import org.darcy.gate.net.ProtobufIntZlibFrameDecoder;
+import org.darcy.gate.net.ProtobufIntZlibFrameEncoder;
+import org.darcy.gate.net.SangoProtobufDecoder;
+import org.darcy.gate.net.SangoProtobufEncoder;
 import org.darcy.sanguo.Configuration;
 import org.darcy.sanguo.Platform;
 import org.darcy.sanguo.service.Service;
@@ -22,7 +26,7 @@ public class NettyService implements Service {
 		ServerBootstrap b = new ServerBootstrap();
 
 		((ServerBootstrap) ((ServerBootstrap) b.group(this.bossGroup, this.workerGroup)
-				.channel(NioServerSocketChannel.class)).childHandler(new ChannelInitializer() {
+				.channel(NioServerSocketChannel.class)).childHandler(new ChannelInitializer<Channel>() {
 
 					@Override
 					protected void initChannel(Channel ch) throws Exception {
@@ -32,7 +36,7 @@ public class NettyService implements Service {
 										new SangoProtobufDecoder(PbPacket.Packet.getDefaultInstance()))
 								.addLast("frameEncoder", new ProtobufIntZlibFrameEncoder())
 								.addLast("protobufEncoder", new SangoProtobufEncoder())
-								.addLast("sangoServerHandler", new SangoServerHandler());
+								.addLast("sangoServerHandler", new SangoClientHandler());
 					}
 				}).option(ChannelOption.SO_BACKLOG, Integer.valueOf(1024)))
 						.childOption(ChannelOption.SO_RCVBUF, Integer.valueOf(1048576))

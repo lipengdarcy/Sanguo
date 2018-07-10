@@ -7,10 +7,13 @@ import java.util.zip.InflaterInputStream;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 
 public class ProtobufIntZlibFrameDecoder extends ByteToMessageDecoder {
+
+	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 		int count = 10;
 		in = in.order(ByteOrder.BIG_ENDIAN);
@@ -46,14 +49,13 @@ public class ProtobufIntZlibFrameDecoder extends ByteToMessageDecoder {
 					} catch (Throwable e) {
 						e.printStackTrace();
 					}
-
 					continue;
 				}
 				in.resetReaderIndex();
 				return;
 			}
-
 			return;
 		}
 	}
+
 }

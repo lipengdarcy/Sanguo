@@ -1,10 +1,10 @@
 package org.darcy.sanguo.gate;
 
+import org.darcy.gate.net.ProtobufIntZlibFrameDecoder;
+import org.darcy.gate.net.ProtobufIntZlibFrameEncoder;
+import org.darcy.gate.net.SangoProtobufDecoder;
+import org.darcy.gate.net.SangoProtobufEncoder;
 import org.darcy.sanguo.Platform;
-import org.darcy.sanguo.net.ProtobufIntZlibFrameDecoder;
-import org.darcy.sanguo.net.ProtobufIntZlibFrameEncoder;
-import org.darcy.sanguo.net.SangoProtobufDecoder;
-import org.darcy.sanguo.net.SangoProtobufEncoder;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -39,7 +39,7 @@ public class GateConnector implements Runnable {
 					b.group(this.workerGroup);
 					b.channel(NioSocketChannel.class);
 					b.option(ChannelOption.SO_KEEPALIVE, Boolean.valueOf(true));
-					b.handler(new ChannelInitializer() {
+					b.handler(new ChannelInitializer<Channel>() {
 						@Override
 						protected void initChannel(Channel ch) throws Exception {
 							ch.pipeline().addLast("frameDecoder", new ProtobufIntZlibFrameDecoder())

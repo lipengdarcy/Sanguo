@@ -3,6 +3,9 @@ package org.darcy.gate.net;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import org.darcy.gate.packet.DefaultPacketHandler;
+import org.darcy.sanguo.Platform;
+import org.darcy.sanguo.account.Account;
+import org.darcy.sanguo.player.Player;
 
 import com.google.protobuf.GeneratedMessage;
 
@@ -17,9 +20,15 @@ public class ClientSession {
 	public static final int STATE_DISCONNECT = 1;
 	protected long lastActiveTime;
 	protected ArrayBlockingQueue<PbPacket.Packet> queue = new ArrayBlockingQueue<Packet>(2048);
-	private int state;//用户session状态，0：掉线，1：在线
-	private int id;
+
+	private int state;// 用户session状态，0：掉线，1：在线
+	private int id; // session id
+	
 	private ChannelHandlerContext ctx;
+	
+	//这2个属性是非网管属性
+	private int playerId;// 玩家id
+	protected Account account;
 
 	public ClientSession(ChannelHandlerContext ctx) {
 		this.ctx = ctx;
@@ -27,6 +36,24 @@ public class ClientSession {
 		this.lastActiveTime = System.currentTimeMillis();
 		this.state = 0;
 	}
+
+	public void setPlayer(Player player) {
+		this.playerId = player.getId();
+	}
+
+	public Player getPlayer() {
+		Player player = Platform.getPlayerManager().getPlayerById(this.playerId);
+		return player;
+	}
+	
+	public Account getAccount() {
+		return this.account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
 
 	public int getId() {
 		return this.id;
@@ -84,5 +111,22 @@ public class ClientSession {
 			this.ctx.writeAndFlush(opt);
 			System.out.println("Sent ptCode:" + ptCode + " " + " packet:" + msg);
 		}
+	}
+
+	public int getPlayerId() {
+		return this.playerId;
+	}
+
+	public String getIp() {
+		return getIp(this.ctx);
+	}
+
+	public static String getIp(ChannelHandlerContext ctx) {
+		String ip = null;
+		if (ctx != null) {
+			ip = ctx.channel().remoteAddress().toString();
+			ip = ip.substring(1, ip.indexOf(":"));
+		}
+		return ip;
 	}
 }

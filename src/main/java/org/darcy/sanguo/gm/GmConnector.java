@@ -7,12 +7,12 @@ import java.io.PrintStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.darcy.gate.net.ProtobufIntZlibFrameDecoder;
+import org.darcy.gate.net.ProtobufIntZlibFrameEncoder;
+import org.darcy.gate.net.SangoProtobufDecoder;
+import org.darcy.gate.net.SangoProtobufEncoder;
 import org.darcy.sanguo.Configuration;
 import org.darcy.sanguo.Platform;
-import org.darcy.sanguo.net.ProtobufIntZlibFrameDecoder;
-import org.darcy.sanguo.net.ProtobufIntZlibFrameEncoder;
-import org.darcy.sanguo.net.SangoProtobufDecoder;
-import org.darcy.sanguo.net.SangoProtobufEncoder;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;

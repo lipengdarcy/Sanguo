@@ -96,10 +96,6 @@ public class ExcelUtils {
 	 * 
 	 * @param fileName
 	 *            excel文件的路径，如：effect.xls
-	 * @param type
-	 *            1：commons； 2：server
-	 * @param sheetIndex
-	 *            excel文件的sheet下标
 	 */
 	public static List<Row> getGateInfo(String fileName) {
 		String prefix = "cfg/gate/";

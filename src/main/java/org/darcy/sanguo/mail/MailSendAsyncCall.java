@@ -2,11 +2,11 @@ package org.darcy.sanguo.mail;
 
 import java.text.MessageFormat;
 
+import org.darcy.gate.net.ClientSession;
 import org.darcy.sanguo.Platform;
 import org.darcy.sanguo.asynccall.AsyncCall;
 import org.darcy.sanguo.asynccall.AsyncSaver;
 import org.darcy.sanguo.event.Event;
-import org.darcy.sanguo.net.ClientSession;
 import org.darcy.sanguo.player.Player;
 import org.darcy.sanguo.util.DBUtil;
 

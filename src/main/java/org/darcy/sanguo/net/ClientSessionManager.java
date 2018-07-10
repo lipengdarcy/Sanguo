@@ -3,6 +3,7 @@ package org.darcy.sanguo.net;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.darcy.gate.net.ClientSession;
 import org.darcy.sanguo.Platform;
 import org.darcy.sanguo.updater.Updatable;
 
@@ -27,7 +28,7 @@ public class ClientSessionManager implements Updatable {
 					if (session.isDisconnect()) {
 						this.sessions.remove(Integer.valueOf(session.getId()));
 						session.close();
-						Platform.getLog().logWorld("ClientSession disconnect, playerId:" + session.getPid());
+						Platform.getLog().logWorld("ClientSession disconnect, playerId:" + session.getPlayerId());
 					} else {
 						session.update();
 					}

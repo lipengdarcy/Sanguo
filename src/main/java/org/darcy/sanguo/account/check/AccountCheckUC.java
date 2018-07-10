@@ -5,9 +5,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
+import org.darcy.gate.net.ClientSession;
 import org.darcy.sanguo.Configuration;
 import org.darcy.sanguo.Platform;
-import org.darcy.sanguo.net.ClientSession;
 
 import com.alibaba.druid.util.HexBin;
 import com.google.protobuf.InvalidProtocolBufferException;

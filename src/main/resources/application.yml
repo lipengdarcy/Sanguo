@@ -3,117 +3,28 @@ sanguo:
   name: 我的三国世界
   
 
-#tomcat端口配置
-server:
-  port: 8082
+#网关的tcp地址和端口
+gate: 
+  address: 127.0.0.1
+  port: 12001
+  
+# bossGroup的线程数
+boss:
+  thread:
+    count: 2
+    
+# worker的线程数
+worker:
+  thread:
+    count: 2
+#是否使用长连接
+so:
+  keepalive:  true
+  backlog: 100
 
-#日志配置
-logging:
-  level: 
-    root: info
-    cn.smarthse.business.service: debug
-    cn.smarthse.business.dao: debug
-  file: logs/SpringBoot.log
-
-spring:
-  #数据源配置（多数据源）
-  datasource:
-    use-global-data-source-stat: true
-    # Druid AOP config
-    aop-patterns: cn.smarthse.service.*
-    aop-proxy-target-class: true
-    # 1.Master datasource config 读写
-    master: 
-      name: master
-      url: jdbc:mysql://localhost/product_master?useSSL=false
-      port: 3306
-      username: root
-      password: 123456
-    # 2.SlaveAlpha datasource config 读
-    slave1: 
-      name: SlaveAlpha
-      url: jdbc:mysql://localhost/product_slave_alpha?useSSL=false
-      port: 3306
-      username: root
-      password: 123456
-    # 3.SlaveBeta datasource config 读
-    slave2: 
-      name: SlaveBeta
-      url: jdbc:mysql://localhost/product_slave_beta?useSSL=false
-      port: 3306
-      username: root
-      password: 123456
-    # 4.SlaveGamma datasource config 读
-    slave3: 
-      name: SlaveGamma
-      url: jdbc:mysql://localhost/product_slave_gamma?useSSL=false
-      port: 3306
-      username: root
-      password: 123456
-
-    url: jdbc:mysql://localhost:3306/parter
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
-    connectionProperties: druid.stat.mergeSql=true
-  #模板引擎
-  freemarker:
-    cache: false
-    request-context-attribute: request
-    template-loader-path: classpath:/template
-    suffix: .html
-    prefix: /html/   
-  #redis缓存配置
-  redis:
-    #是否启用redis缓存服务
-    cacheable: false  
-    #redis单机节点 JedisConnectionFactory
-    host: 127.0.0.1
-    port: 6379
-    pool:
-      max-active: 10
-      max-wait: 10
-      min-idle: 1
-      max-idle: 1
-    #redis集群节点：RedisNode
-    cluster: 
-      #是否启用redis集群
-      clusterable: false
-      nodes: 127.0.0.1:7001,127.0.0.1:7002,127.0.0.1:7003
-      timeout: 2000
-      max-redirects: 8
-
-#mybatis配置：dao层接口路径+sql文件mapper
-mybatis:
-  default: 
-    type-aliases-package: cn.smarthse.core.dao
-    mapper-locations: classpath:mapper/default/**/*Mapper.xml
-  readwrite: 
-    type-aliases-package: cn.smarthse.admin.dao
-    mapper-locations: classpath:mapper/readwrite/**/*Mapper.xml
-
-#ActiveMQ 配置
-jms:
-  # 是否开启消息队列
-  enable: false
-  url: tcp://localhost:61616  
-  queueName: darcy.queue
-  topicName: darcy.topic
   
 
-#邮件配置
-mail:
-  host: smtp.163.com
-  port: 21  
-  username: darcy_lee@163.com #开通了smtp服务的QQ邮箱  
-  password: 123456 #授权码  
-  smtp:
-    auth: true  
-    timeout: 30000  
-    starttls.enable: true
-    socketFactory.port: 
-  from: darcy_lee@163.com
-  replyTo: 306623095@qq.com  
+
+
 
     

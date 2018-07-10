@@ -38,6 +38,7 @@ public class SangoProtobufDecoder extends MessageToMessageDecoder<ByteBuf> {
 		this.extensionRegistry = extensionRegistry;
 	}
 
+	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
 		byte[] array;
 		int offset;
@@ -63,4 +64,5 @@ public class SangoProtobufDecoder extends MessageToMessageDecoder<ByteBuf> {
 			out.add(this.prototype.newBuilderForType().mergeFrom(array, offset, length, this.extensionRegistry)
 					.build());
 	}
+
 }

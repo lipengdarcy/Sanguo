@@ -29,7 +29,7 @@ public class ClientSessionManager implements Runnable {
 				while (iter.hasNext()) {
 					ClientSession session = (ClientSession) iter.next();
 					if (session.isDisconnect()) {
-						sessions.remove(session);
+						sessions.remove(session.getId());
 						session.close();
 					} else {
 						session.update();

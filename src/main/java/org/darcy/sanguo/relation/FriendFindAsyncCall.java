@@ -1,7 +1,7 @@
 package org.darcy.sanguo.relation;
 
+import org.darcy.gate.net.ClientSession;
 import org.darcy.sanguo.asynccall.AsyncCall;
-import org.darcy.sanguo.net.ClientSession;
 import org.darcy.sanguo.player.MiniPlayer;
 import org.darcy.sanguo.player.Player;
 import org.darcy.sanguo.util.DBUtil;

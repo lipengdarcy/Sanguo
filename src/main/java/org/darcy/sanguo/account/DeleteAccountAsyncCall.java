@@ -1,7 +1,7 @@
 package org.darcy.sanguo.account;
 
+import org.darcy.gate.net.ClientSession;
 import org.darcy.sanguo.asynccall.AsyncCall;
-import org.darcy.sanguo.net.ClientSession;
 import org.darcy.sanguo.player.Player;
 
 import com.google.protobuf.InvalidProtocolBufferException;

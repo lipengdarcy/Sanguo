@@ -1,6 +1,6 @@
 package org.darcy.sanguo.packethandler;
 
-import org.darcy.sanguo.net.ClientSession;
+import org.darcy.gate.net.ClientSession;
 
 import sango.packet.PbPacket;
 
